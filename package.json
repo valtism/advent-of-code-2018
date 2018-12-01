@@ -1,0 +1,24 @@
+{
+  "name": "advent-of-code-2018",
+  "version": "1.0.0",
+  "description": "https://adventofcode.com/2018",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valtism/advent-of-code-2018.git"
+  },
+  "author": "Dan Wood",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valtism/advent-of-code-2018/issues"
+  },
+  "homepage": "https://github.com/valtism/advent-of-code-2018#readme",
+  "dependencies": {
+    "aoc-loader": "^1.2.0",
+    "dotenv": "^6.1.0",
+    "jest": "^23.6.0"
+  }
+}
