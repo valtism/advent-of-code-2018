@@ -12,7 +12,7 @@ aocLoader(2018, 2).then(data => {
 
 function day2part1(data) {
     const ids = data.split("\n");
-    const counts = ids.map(getCounts);
+    const counts = ids.map(getCountPair);
     var countTrack = [0, 0];
     for (let i = 0; i < counts.length; i++) {
         const countPair = counts[i];
@@ -22,21 +22,25 @@ function day2part1(data) {
     return countTrack.reduce((acc, curr) => acc * curr);
 }
 
-function getCounts(id) {
-    var map = new Map();
-    const idArray = id.split("");
-    idArray.forEach(letter => {
-        if (map.has(letter)) {
-            var count = map.get(letter);
-            map.set(letter, ++count);
+function getCountPair(id) {
+    const counts = getCountArray(id);
+    const hasCountsOfTwo = counts.filter(count => count === 2).length ? 1 : 0;
+    const hasCountsOfThree = counts.filter(count => count === 3).length ? 1 : 0;
+    return [hasCountsOfTwo, hasCountsOfThree];
+}
+
+function getCountArray(id) {
+    const map = new Map();
+    const chars = id.split("");
+    chars.forEach(char => {
+        if (map.has(char)) {
+            var count = map.get(char);
+            map.set(char, ++count);
         } else {
-            map.set(letter, 1);
+            map.set(char, 1);
         }
     });
-    const counts = Array.from(map.values());
-    const countsOfTwo = counts.filter(count => count === 2).length ? 1 : 0;
-    const countsOfThree = counts.filter(count => count === 3).length ? 1 : 0;
-    return [countsOfTwo, countsOfThree];
+    return Array.from(map.values());
 }
 
 function day2part2(data) {
@@ -51,6 +55,7 @@ function day2part2(data) {
         const duplicates = shortIds.filter(
             (item, index) => shortIds.indexOf(item) != index
         );
+        // Should only have one duplicate here we're looking for
         return duplicates[0];
     }
 }
