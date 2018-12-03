@@ -1,16 +1,4 @@
-const aocLoader = require("aoc-loader");
-require("dotenv").config();
-
-aocLoader(2018, 2).then(data => {
-    console.time("Part 1");
-    console.log("Part 1: " + day2part1(data));
-    console.timeEnd("Part 1");
-    console.time("Part 2");
-    console.log("Part 2: " + day2part2(data));
-    console.timeEnd("Part 2");
-});
-
-function day2part1(data) {
+function part1(data) {
     const ids = data.split("\n");
     const counts = ids.map(getCountPair);
     var countTrack = [0, 0];
@@ -43,7 +31,7 @@ function getCountArray(id) {
     return Array.from(map.values());
 }
 
-function day2part2(data) {
+function part2(data) {
     const ids = data.split("\n");
     const inputLength = ids[0].length;
     for (let i = 0; i < inputLength; i++) {
@@ -65,6 +53,6 @@ function removeAt(string, i) {
 }
 
 module.exports = {
-    day2part1: day2part1,
-    day2part2: day2part2
+    part1: part1,
+    part2: part2
 };
