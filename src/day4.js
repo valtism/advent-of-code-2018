@@ -60,11 +60,8 @@ function populateMinutes(observations, guardLog) {
         }
         if (!observation.isSleep) {
             const sleepMin = (observation.timestamp - sleepTime) / 1000 / 60;
-            for (
-                let i = sleepTime.getMinutes();
-                i < sleepTime.getMinutes() + sleepMin;
-                i++
-            ) {
+            const startMin = sleepTime.getMinutes();
+            for (let i = startMin; i < startMin + sleepMin; i++) {
                 let minute = i % 60;
                 if (!guard.has(minute)) {
                     guard.set(minute, 1);
