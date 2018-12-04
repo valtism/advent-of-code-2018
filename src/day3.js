@@ -41,7 +41,28 @@ function parseClaim(claim) {
 }
 
 function part2(data) {
-    return 1;
+    const claims = data.split("\n").map(parseClaim);
+
+    const fabric = new Map();
+    claims.forEach(claim => {
+        populateFabric(fabric, claim);
+    });
+
+    const nonOverlapClaim = claims.find(claim => testClaim(fabric, claim));
+    return nonOverlapClaim.Id;
+}
+
+function testClaim(fabric, claim) {
+    // Check if claim does not over any overlapping area
+    for (let x = claim.xStart; x < claim.xEnd; x++) {
+        for (let y = claim.yStart; y < claim.yEnd; y++) {
+            let coords = x + "," + y;
+            if (fabric.get(coords) > 1) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 module.exports = {
