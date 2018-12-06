@@ -1,52 +1,29 @@
 function part1(data) {
+    data = "1, 1\n1, 6\n8, 3\n3, 4\n5, 5\n8, 9";
     const coordStrings = data.split("\n");
     const coords = coordStrings.map(e => e.split(", ").map(Number));
 
-    const lowerBound = getLowerBound(coords);
-    const trimmedCoords = trimCoords(coords, lowerBound);
     const upperBound = getUpperBound(coords);
+    const grid = getDistancesGrid(coords, upperBound);
 
-    const grid = getDistancesGrid(trimmedCoords, upperBound);
     const itemsOnPerimeter = getItemsOnPerimeter(grid, upperBound);
-    const itemCounts = getItemCounts(trimmedCoords, grid);
+    const itemCounts = getItemCounts(coords, grid);
     let largest = getLargestBoundedArea(itemCounts, itemsOnPerimeter);
 
     return largest;
 }
 
-function getLowerBound(coords) {
-    return Array.from(
-        coords.reduce((acc, curr) => {
-            if (curr[0] < acc[0]) {
-                acc[0] = curr[0];
-            }
-            if (curr[1] < acc[1]) {
-                acc[1] = curr[1];
-            }
-            return acc;
-        })
-    );
-}
-
-function trimCoords(coords, lowerBound) {
-    return coords.map(coord => [
-        coord[0] - lowerBound[0],
-        coord[1] - lowerBound[1]
-    ]);
-}
-
 function getUpperBound(coords) {
-    return Array.from(
-        coords.reduce((acc, curr) => {
-            if (curr[0] > acc[0]) {
-                acc[0] = curr[0];
-            }
-            if (curr[1] > acc[1]) {
-                acc[1] = curr[1];
-            }
-            return acc;
-        })
-    );
+    const upperBound = [0, 0];
+    coords.forEach(coord => {
+        if (coord[0] > upperBound[0]) {
+            upperBound[0] = coord[0];
+        }
+        if (coord[1] > upperBound[1]) {
+            upperBound[1] = coord[1];
+        }
+    });
+    return upperBound;
 }
 
 function getDistancesGrid(trimmedCoords, upperBound) {
@@ -119,8 +96,33 @@ function getLargestBoundedArea(itemCounts, itemsOnPerimeter) {
     return largest;
 }
 
-function part2(data) {
-    return 1;
+function part2(data, MAX_DISTANCE) {
+    if (!MAX_DISTANCE) {
+        MAX_DISTANCE = 10000
+    }
+    const coordStrings = data.split("\n");
+    const coords = coordStrings.map(e => e.split(", ").map(Number));
+
+    const upperBound = getUpperBound(coords);
+    const grid = getDistanceToAllGrid(upperBound, coords);
+
+    const gridArray = Array.from(grid);
+    const closeCoords = gridArray.filter(coord => coord[1] < MAX_DISTANCE);
+    return closeCoords.length;
+}
+
+function getDistanceToAllGrid(upperBound, trimmedCoords) {
+    const grid = new Map();
+    for (let x = 0; x <= upperBound[0]; x++) {
+        for (let y = 0; y <= upperBound[1]; y++) {
+            const distanceToAll = trimmedCoords
+                .map(coord => manhattanDistance([x, y], coord))
+                .reduce((arr, curr) => arr + curr);
+            const coordString = "" + x + ", " + y;
+            grid.set(coordString, distanceToAll);
+        }
+    }
+    return grid;
 }
 
 module.exports = {

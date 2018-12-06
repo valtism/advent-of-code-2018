@@ -5,5 +5,5 @@ test("Part 1", () => {
 });
 
 test("Part 2", () => {
-    expect(day6.part2()).toBe(1);
+    expect(day6.part2("1, 1\n1, 6\n8, 3\n3, 4\n5, 5\n8, 9", 32)).toBe(16);
 });
