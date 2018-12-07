@@ -1,5 +1,4 @@
 function part1(data) {
-    data = "1, 1\n1, 6\n8, 3\n3, 4\n5, 5\n8, 9";
     const coordStrings = data.split("\n");
     const coords = coordStrings.map(e => e.split(", ").map(Number));
 
