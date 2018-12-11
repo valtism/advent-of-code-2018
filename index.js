@@ -1,7 +1,7 @@
 const aocLoader = require("aoc-loader");
 require("dotenv").config();
 
-const TEST_DAY = 7;
+const TEST_DAY = 8;
 
 const day = require("./src/day" + TEST_DAY);
 
